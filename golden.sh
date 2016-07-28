@@ -14,10 +14,11 @@ lvextend /dev/vg0/lv_home -r -l +100%FREE
 
 #set hostname
 # sleep for DHclient to get an IP before this runs.
-sleep 60s
+sleep 2m
 
 hostnamectl set-hostname dhcp$(ip route | grep src | awk '{print$9}' |  cut -d . -f 3)-$(ip route | grep src | awk '{print$9}' |  cut -d . -f 4).scl.lab.tlv.redhat.com
 
-echo $date > /root/goldenrun.txt
+date > /root/goldenrun.txt
 
 #If I add this in crontab, don't forget to remove it!
+crontab -l | grep -v golden | crontab -
